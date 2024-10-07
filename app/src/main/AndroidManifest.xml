@@ -33,6 +33,9 @@
 
         <activity android:name=".DeviceConnectActivity" />
 
+        <activity android:name=".kt.CentralActivity" />
+        <activity android:name=".kt.PeripheralActivity" />
+        
         <!--
         Service to handle BLE Advertising - Using a service allows advertising to continue
         when the app is no longer on screen in a reliable manner.

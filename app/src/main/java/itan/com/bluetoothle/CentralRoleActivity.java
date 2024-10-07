@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.test.internal.util.LogUtil;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,6 +24,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import itan.com.bluetoothle.kt.CentralActivity;
 
 
 /**
@@ -39,7 +43,7 @@ public class CentralRoleActivity extends BluetoothActivity implements View.OnCli
     /**
      * Stops scanning after 30 seconds.
      */
-    private static final long SCAN_PERIOD = 30000;
+    private static final long SCAN_PERIOD = 10000;
 
     private RecyclerView mDevicesRecycler;
     private DevicesAdapter mDevicesAdapter;
@@ -61,6 +65,9 @@ public class CentralRoleActivity extends BluetoothActivity implements View.OnCli
         mDevicesRecycler.setHasFixedSize(true);
         mDevicesRecycler.setLayoutManager(new LinearLayoutManager(this));
 
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getApplicationContext(), new LinearLayoutManager(this).getOrientation());
+        mDevicesRecycler.addItemDecoration(dividerItemDecoration);
+
         mDevicesAdapter = new DevicesAdapter(this);
         mDevicesRecycler.setAdapter(mDevicesAdapter);
 
@@ -81,6 +88,7 @@ public class CentralRoleActivity extends BluetoothActivity implements View.OnCli
         switch(view.getId()) {
 
             case R.id.button_scan:
+                mDevicesAdapter.clear();
                 startBLEScan();
                 break;
 
@@ -98,7 +106,8 @@ public class CentralRoleActivity extends BluetoothActivity implements View.OnCli
     start Bluetooth Low Energy scan
      */
     private void startBLEScan() {
-
+        stopScanning();
+        
         BluetoothAdapter bluetoothAdapter = getBluetoothAdapter();
 
         /*
@@ -204,9 +213,9 @@ public class CentralRoleActivity extends BluetoothActivity implements View.OnCli
     @Override
     public void onDeviceItemClick(String deviceName, String deviceAddress) {
 
-        //stopScanning();
+        stopScanning();
 
-        Intent intent = new Intent(this, DeviceConnectActivity.class);
+        Intent intent = new Intent(this, CentralActivity.class);
         intent.putExtra(DeviceConnectActivity.EXTRAS_DEVICE_NAME, deviceName);
         intent.putExtra(DeviceConnectActivity.EXTRAS_DEVICE_ADDRESS, deviceAddress);
         startActivity(intent);

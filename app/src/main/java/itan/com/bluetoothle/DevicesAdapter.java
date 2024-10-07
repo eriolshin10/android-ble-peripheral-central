@@ -86,7 +86,7 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
         */
 
         if (TextUtils.isEmpty(deviceName)) {
-            holder.mDeviceNameView.setText("");
+            holder.mDeviceNameView.setText("N/A");
         } else {
             holder.mDeviceNameView.setText(deviceName);
         }
@@ -135,7 +135,8 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
             mArrayList.set(existingPosition, scanResult);
         } else {
             // Add new Device's ScanResult to list.
-            mArrayList.add(scanResult);
+            if (scanResult.getDevice().getName() != null && !scanResult.getDevice().getName().isEmpty())
+                mArrayList.add(scanResult);
         }
 
         if (notify) {
@@ -168,5 +169,8 @@ public class DevicesAdapter extends RecyclerView.Adapter<DevicesAdapter.ViewHold
         return position;
     }
 
-
+    public void clear() {
+        mArrayList.clear();
+        notifyDataSetChanged();
+    }
 }

@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import itan.com.bluetoothle.kt.PeripheralActivity;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String TAG = "BluetoothLE";
@@ -153,7 +155,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch(view.getId()) {
 
             case R.id.button_role_peripheral:
-                intent = new Intent(this, PeripheralRoleActivity.class);
+                intent = new Intent(this, PeripheralActivity.class);
                 break;
 
             case R.id.button_role_central:
